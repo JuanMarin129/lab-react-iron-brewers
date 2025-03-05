@@ -18,7 +18,7 @@ function AllBeersPage() {
   // 3. Use the response data from the Beers API to update the state variable.
 
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_SERVER_URL}`)
+    axios.get(`https://ih-beers-api2.herokuapp.com/beers`)
     .then((response) => {
       //console.log(response.data)
       setBeers(response.data)

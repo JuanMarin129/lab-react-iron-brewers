@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import beersJSON from "./../assets/beers.json";
+import axios from "axios";
 
 
 function RandomBeersPage() {
@@ -18,6 +19,23 @@ function RandomBeersPage() {
   // 3. Use the response data from the Beers API to update the state variable.
 
 
+  useEffect(() => {
+    getDataAPI()
+  }, [])
+
+
+  const getDataAPI = async () => {
+
+    try {
+
+      const response = await axios.get(`https://ih-beers-api2.herokuapp.com/beers/random`)
+      setRandomBeer(response.data)
+      
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
 
   // The logic and the structure for the page showing the random beer. You can leave this as it is.
   return (
@@ -41,7 +59,7 @@ function RandomBeersPage() {
           <button
             className="btn btn-primary"
             onClick={() => {
-              navigate(-1);
+              navigate("/");
             }}
           >
             Back
