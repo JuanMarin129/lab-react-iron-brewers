@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 
 function AddBeerPage() {
   // State variables to store the values of the form inputs. You can leave these as they are.
@@ -29,12 +30,35 @@ function AddBeerPage() {
   // 3. Once the beer is created, navigate the user to the page showing the list of all beers.
 
 
+   const numeroLevel = parseInt(attenuationLevel)
+   console.log(numeroLevel)
+   console.log(typeof(numeroLevel))
+  const handleSubmitBeer = (evento) => {
+    evento.preventDefault();
+
+    axios.post(`https://ih-beers-api2.herokuapp.com/beers/new`, {
+      name: name,
+      tagline: tagline,
+      description: description,
+      image_url: imageUrl, 
+      first_brewed: firstBrewed,
+      brewers_tips: brewersTips,
+      attenuation_level: parseInt(attenuationLevel),
+      contributed_by: contributedBy
+    })
+    .then(() => {
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  }
+
 
   // Structure and the content of the page showing the form for adding a new beer. You can leave this as it is.
   return (
     <>
       <div className="d-inline-flex flex-column w-100 p-4">
-        <form>
+        <form onSubmit={handleSubmitBeer}>
           <label>Name</label>
           <input
             className="form-control mb-4"
@@ -122,7 +146,7 @@ function AddBeerPage() {
             value={contributedBy}
             onChange={handleContributedBy}
           />
-          <button className="btn btn-primary btn-round">Add Beer</button>
+          <button type="submit" className="btn btn-primary btn-round">Add Beer</button>
         </form>
       </div>
     </>
